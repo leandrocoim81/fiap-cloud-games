@@ -1,0 +1,103 @@
+FCG.sln
+src/
+  FCG.Api/                     # camada HTTP (fina)
+    Controllers/
+      AuthController.cs
+      GamesController.cs
+      LibraryController.cs
+    Middlewares/
+      ErrorHandlingMiddleware.cs
+      RequestLoggingMiddleware.cs
+    Contracts/                 # DTOs HTTP (Request/Response)
+      Auth/
+      Games/
+      Library/
+    Program.cs
+    appsettings.json
+
+  FCG.Application/             # CASOS DE USO (orquestração) ✅ testável
+    Abstractions/              # interfaces de gateways
+      Persistence/
+        IUserRepository.cs
+        IGameRepository.cs
+        ILibraryRepository.cs
+        IUnitOfWork.cs
+      Security/
+        IPasswordHasher.cs
+        ITokenService.cs
+      Time/
+        IClock.cs
+    UseCases/
+      Auth/
+        RegisterUser/
+          RegisterUserCommand.cs
+          RegisterUserHandler.cs
+          RegisterUserResult.cs
+        Login/
+          LoginCommand.cs
+          LoginHandler.cs
+          LoginResult.cs
+      Games/
+        CreateGame/
+          CreateGameCommand.cs
+          CreateGameHandler.cs
+        UpdateGame/
+          UpdateGameCommand.cs
+          UpdateGameHandler.cs
+      Library/
+        AddToLibrary/
+          AddToLibraryCommand.cs
+          AddToLibraryHandler.cs
+        GetMyLibrary/
+          GetMyLibraryQuery.cs
+          GetMyLibraryHandler.cs
+    Common/
+      Exceptions/
+      Validation/
+
+  FCG.Domain/                  # DOMÍNIO PURO (regras/entidades) ✅ super testável
+    Entities/
+      User.cs
+      Game.cs
+      LibraryItem.cs
+    ValueObjects/              # opcional (Email, Password)
+      Email.cs
+    Policies/
+      PasswordPolicy.cs
+    Errors/
+      DomainErrors.cs
+
+  FCG.Infrastructure/          # detalhes técnicos (EF/JWT/BCrypt) ✅ trocável
+    Persistence/
+      AppDbContext.cs
+      Configurations/
+        UserConfiguration.cs
+        GameConfiguration.cs
+        LibraryItemConfiguration.cs
+      Migrations/
+    Repositories/
+      UserRepository.cs
+      GameRepository.cs
+      LibraryRepository.cs
+      UnitOfWork.cs
+    Security/
+      BCryptPasswordHasher.cs
+      JwtTokenService.cs
+    Time/
+      SystemClock.cs
+    DependencyInjection.cs      # AddInfrastructure(...)
+
+tests/
+  FCG.UnitTests/               # testes unitários (Domain + Application)
+    Domain/
+      Policies/
+         PasswordPolicyTests.cs
+         EmailTests.cs
+    Application/
+      RegisterUserHandlerTests.cs
+      AddToLibraryHandlerTests.cs
+
+  FCG.IntegrationTests/        # opcional (API+DB real com Testcontainers)
+    Api/
+      AuthEndpointsTests.cs
+      GamesEndpointsTests.cs
