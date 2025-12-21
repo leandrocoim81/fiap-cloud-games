@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FCG.Domain.Entities
+﻿namespace FCG.Domain.Entities
 {
     public enum UserRole
     {
@@ -17,13 +13,13 @@ namespace FCG.Domain.Entities
         public string PasswordHash { get; private set; }
         public UserRole Role { get; private set; }
 
-        public User(string Name, string Email, string PasswordHash)
+        public User(string name, string email, string passwordHash)
         {
-            this.Id = Guid.NewGuid();
-            this.Name = Name;
-            this.Email = Email;
-            this.PasswordHash = PasswordHash;
-            this.Role = Role;
+            Id = Guid.NewGuid();
+            Name = name;
+            Email = email;
+            PasswordHash = passwordHash;
+            Role = Role;
         }
 
         protected User() { }

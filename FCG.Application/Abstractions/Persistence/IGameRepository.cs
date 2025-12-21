@@ -5,9 +5,9 @@ using System.Text;
 
 namespace FCG.Application.Abstractions.Persistence
 {
-    public interface IUserRepository
+    public interface IGameRepository
     {
-        Task<bool> ExistsByEmail(string email);
-        Task<Guid> Add(User user);
+        Task<bool> ExistsByTitle(string title);
+        Task<Guid> Add(Game game);
     }
 }

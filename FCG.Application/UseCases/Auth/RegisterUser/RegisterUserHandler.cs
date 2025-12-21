@@ -21,7 +21,8 @@ namespace FCG.Application.UseCases.Auth.RegisterUser
 
         public async Task<Guid> Handle(RegisterUserCommand cmd)
         {
-            var normalizedEmail = cmd.Email.Trim().ToLowerInvariant();
+            var normalizedEmail = cmd.Email.Trim().ToLowerInvariant()
+                ;
 
             var emailResult = EmailPolicy.Validate(normalizedEmail);
             if (!emailResult.IsValid)

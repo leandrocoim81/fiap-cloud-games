@@ -44,8 +44,21 @@ namespace FCG.Domain.Errors
 
         public static class Game
         {
-            public static readonly DomainError AlreadyInLibrary =
-                new("GAME_ALREADY_IN_LIBRARY", "Jogo já está na biblioteca do usuário.");
+            public static readonly DomainError TitleIsNullOrWhiteSpace =
+                new("GAME_TITLE_NULL_OR_WHITESPACE", "O título do jogo é obrigatório.");
+
+            public static readonly DomainError TitleAlreadyExists =
+                new("GAME_TITLE_ALREADY_EXISTS", "Já existe um jogo cadastrado com este título.");
+
+            public static readonly DomainError PriceIsNegative =
+                new("GAME_PRICE_NEGATIVE", "O preço do jogo não pode ser negativo.");
+
+            public static readonly DomainError DescriptionTooLong =
+                new("GAME_DESCRIPTION_TOO_LONG", "A descrição do jogo é muito longa.");
+
+            public static readonly DomainError TitleTooLong =
+                new("GAME_TITLE_TOO_LONG", "O título do jogo é muito longo.");
+
         }
     }
 }
