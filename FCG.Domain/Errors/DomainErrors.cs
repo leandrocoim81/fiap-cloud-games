@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FCG.Domain.Policies.User;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,7 +19,7 @@ namespace FCG.Domain.Errors
                 new("USER_PASSWORD_NULL_OR_WHITESPACE", "Senha é obrigatória.");
 
             public static readonly DomainError PasswordTooShort =
-                new("USER_PASSWORD_MIN_LENGTH", $"Senha deve ter no mínimo {Policies.PasswordPolicy.MinLength} caracteres.");
+                new("USER_PASSWORD_MIN_LENGTH", $"Senha deve ter no mínimo {PasswordPolicy.MinLength} caracteres.");
 
             public static readonly DomainError PasswordMissingLetter =
                 new("USER_PASSWORD_MISSING_LETTER", "Senha deve conter pelo menos uma letra.");
@@ -59,6 +60,21 @@ namespace FCG.Domain.Errors
             public static readonly DomainError TitleTooLong =
                 new("GAME_TITLE_TOO_LONG", "O título do jogo é muito longo.");
 
+        }
+
+        public static class Library
+        {
+            public static readonly DomainError GameIdIsEmpty =
+                new("LIBRARY_GAME_ID_IS_EMPTY", "GameId é obrigatório");            
+
+            public static readonly DomainError UserIdIsEmpty = 
+                new("LIBRARY_USER_ID_IS_EMPTY", "UserId é obrigatório");
+
+            public static readonly DomainError GameAlreadyInLibrary =
+                new("LIBRARY_GAME_ALREADY_IN_LIBRARY", "O jogo já está na biblioteca do usuário.");
+
+            public static DomainError GameDoesNotExist =
+                new("LIBRARY_GAME_DOES_NOT_EXIST", "O jogo não existe.");
         }
     }
 }

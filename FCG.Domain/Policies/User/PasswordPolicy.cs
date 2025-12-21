@@ -1,6 +1,6 @@
 ﻿using FCG.Domain.Errors;
 
-namespace FCG.Domain.Policies
+namespace FCG.Domain.Policies.User
 {
     public static class PasswordPolicy
     {

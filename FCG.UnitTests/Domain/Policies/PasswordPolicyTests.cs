@@ -1,4 +1,4 @@
-﻿using FCG.Domain.Policies;
+﻿using FCG.Domain.Policies.User;
 using System;
 using System.Collections.Generic;
 using System.Text;

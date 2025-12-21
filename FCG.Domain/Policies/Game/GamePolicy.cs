@@ -1,10 +1,11 @@
 ﻿using FCG.Domain.Errors;
+using FCG.Domain.Policies.User;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
 
-namespace FCG.Domain.Policies
+namespace FCG.Domain.Policies.Game
 {
     public static class GamePolicy
     {

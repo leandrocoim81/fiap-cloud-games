@@ -14,7 +14,7 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\FCG.Application\FCG.Application.csproj" />
-		<ProjectReference Include="..\FGC.Domain\FCG.Domain.csproj" />
+	  <ProjectReference Include="..\FCG.Application\FCG.Application.csproj" />
+	  <ProjectReference Include="..\FCG.Domain\FCG.Domain.csproj" />
 	</ItemGroup>
 </Project>

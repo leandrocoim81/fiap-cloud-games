@@ -1,7 +1,4 @@
-﻿using FCG.Domain.Policies;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FCG.Domain.Policies.User;
 using Xunit;
 
 namespace FCG.UnitTests.Domain.Policies

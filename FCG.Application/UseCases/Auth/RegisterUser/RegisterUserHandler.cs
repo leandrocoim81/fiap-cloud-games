@@ -3,7 +3,7 @@ using FCG.Application.Abstractions.Security;
 using FCG.Domain.Entities;
 using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
-using FCG.Domain.Policies;
+using FCG.Domain.Policies.User;
 using System.Text.RegularExpressions;
 
 namespace FCG.Application.UseCases.Auth.RegisterUser

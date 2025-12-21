@@ -2,7 +2,7 @@
 using FCG.Domain.Entities;
 using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
-using FCG.Domain.Policies;
+using FCG.Domain.Policies.Game;
 
 namespace FCG.Application.UseCases.Games.RegisterGame
 {
