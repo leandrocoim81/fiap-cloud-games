@@ -19,7 +19,7 @@
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
-            Role = Role;
+            Role = UserRole.User;
         }
 
         protected User() { }
