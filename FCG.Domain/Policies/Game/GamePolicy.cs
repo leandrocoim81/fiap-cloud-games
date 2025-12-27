@@ -1,9 +1,5 @@
 ﻿using FCG.Domain.Errors;
-using FCG.Domain.Policies.User;
-using System;
-using System.Collections.Generic;
-using System.Net.Mail;
-using System.Text;
+using FCG.Domain.Validation;
 
 namespace FCG.Domain.Policies.Game
 {

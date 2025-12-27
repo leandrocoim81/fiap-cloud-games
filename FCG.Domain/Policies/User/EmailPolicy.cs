@@ -1,4 +1,5 @@
 ﻿using FCG.Domain.Errors;
+using FCG.Domain.Validation;
 using System.Net.Mail;
 
 namespace FCG.Domain.Policies.User

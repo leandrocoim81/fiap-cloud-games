@@ -1,4 +1,5 @@
 ﻿using FCG.Domain.Errors;
+using FCG.Domain.Validation;
 
 namespace FCG.Domain.Policies.User
 {
@@ -36,11 +37,5 @@ namespace FCG.Domain.Policies.User
 
             return ValidationResult.Ok();
         }
-    }
-
-    public readonly record struct ValidationResult(bool IsValid, DomainError? Error)
-    {
-        public static ValidationResult Ok() => new(true, null);
-        public static ValidationResult Fail(DomainError error) => new(false, error);
     }
 }
