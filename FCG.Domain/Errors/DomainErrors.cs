@@ -33,6 +33,12 @@ namespace FCG.Domain.Errors
             public static readonly DomainError EmailIsNullOrWhiteSpace =
                 new("USER_EMAIL_NULL_OR_WHITESPACE", "E-mail é obrigatório.");
 
+            public static readonly DomainError NameIsNullOrWhiteSpace =
+                new("USER_NAME_NULL_OR_WHITESPACE", "Nome é obrigatório.");
+            
+            public static readonly DomainError PasswordHashIsNullOrWhiteSpace =
+                new("USER_PASSWORD_HASH_NULL_OR_WHITESPACE", "Hash da senha é obrigatório.");
+
             public static readonly DomainError InvalidEmail =
                 new("USER_EMAIL_INVALID", "E-mail inválido.");
         }

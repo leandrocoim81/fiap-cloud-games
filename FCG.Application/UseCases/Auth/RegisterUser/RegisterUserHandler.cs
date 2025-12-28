@@ -1,9 +1,11 @@
-﻿using FCG.Application.Abstractions.Persistence;
+﻿
+using FCG.Application.Abstractions.Persistence;
 using FCG.Application.Abstractions.Security;
 using FCG.Domain.Entities;
 using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
 using FCG.Domain.Policies.User;
+using FCG.Domain.ValueObjects;
 using System.Text.RegularExpressions;
 
 namespace FCG.Application.UseCases.Auth.RegisterUser
@@ -21,24 +23,19 @@ namespace FCG.Application.UseCases.Auth.RegisterUser
 
         public async Task<Guid> Handle(RegisterUserCommand cmd)
         {
-            var normalizedEmail = cmd.Email.Trim().ToLowerInvariant()
-                ;
-
-            var emailResult = EmailPolicy.Validate(normalizedEmail);
-            if (!emailResult.IsValid)
-                throw new DomainException(emailResult.Error!);
+            var email = new Email(cmd.Email);
 
             var passwordResult = PasswordPolicy.Validate(cmd.Password);
             if (!passwordResult.IsValid) throw new DomainException(passwordResult.Error!);
 
-            if (await _users.ExistsByEmail(normalizedEmail))
+            if (await _users.ExistsByEmail(email.Value))
                 throw new DomainException(DomainErrors.User.EmailAlreadyExists);
 
             var normalizedName = Regex.Replace(cmd.Name.Trim(), @"\s+", " ");
 
             var hash = _hasher.Hash(cmd.Password);
 
-            var user = new User(normalizedName, normalizedEmail, hash);
+            var user = new User(normalizedName, email, hash);
 
             var createdUserId = await _users.Add(user);
 
