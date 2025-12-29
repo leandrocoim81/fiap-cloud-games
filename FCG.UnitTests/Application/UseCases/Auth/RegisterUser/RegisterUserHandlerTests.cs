@@ -1,13 +1,12 @@
 ﻿using FCG.Application.Abstractions.Persistence;
 using FCG.Application.Abstractions.Security;
+using FCG.Application.Common.Exceptions;
 using FCG.Application.UseCases.Auth.RegisterUser;
 using FCG.Domain.Entities;
 using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
+using FCG.Domain.ValueObjects;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace FCG.UnitTests.Application.UseCases.Auth.RegisterUser
@@ -27,7 +26,7 @@ namespace FCG.UnitTests.Application.UseCases.Auth.RegisterUser
 
             var cmd = new RegisterUserCommand(
                 Name: "Leandro",
-                Email: "email-invalido",
+                Email: new Email("email-invalido"),
                 Password: "Abcdef1!"
             );
 
@@ -35,7 +34,6 @@ namespace FCG.UnitTests.Application.UseCases.Auth.RegisterUser
 
             Assert.Equal(DomainErrors.User.InvalidEmail.Code, ex.Code);
 
-            // garante que não foi nem tentar no repositório/hasher
             _users.Verify(r => r.ExistsByEmail(It.IsAny<string>()), Times.Never);
             _hasher.Verify(h => h.Hash(It.IsAny<string>()), Times.Never);
         }
@@ -45,16 +43,16 @@ namespace FCG.UnitTests.Application.UseCases.Auth.RegisterUser
         {
             var sut = CreateSut();
 
+            var email = new Email("leandro@email.com");
+
             var cmd = new RegisterUserCommand(
                 Name: "Leandro",
-                Email: "leandro@email.com",
-                Password: "123" // inválida
+                Email: email,
+                Password: "123"
             );
 
-            var ex = await Assert.ThrowsAsync<DomainException>(() => sut.Handle(cmd));
+            var ex = await Assert.ThrowsAsync<ValidationException>(() => sut.Handle(cmd));
 
-            // sua PasswordPolicy pode retornar erros diferentes (TooShort, MissingLetter etc.)
-            // então aqui a gente só garante que é um erro de password do catálogo:
             Assert.StartsWith("USER_PASSWORD_", ex.Code);
 
             _users.Verify(r => r.ExistsByEmail(It.IsAny<string>()), Times.Never);
@@ -75,7 +73,7 @@ namespace FCG.UnitTests.Application.UseCases.Auth.RegisterUser
                 Password: "Abcdef1!"
             );
 
-            var ex = await Assert.ThrowsAsync<DomainException>(() => sut.Handle(cmd));
+            var ex = await Assert.ThrowsAsync<ConflictException>(() => sut.Handle(cmd));
 
             Assert.Equal(DomainErrors.User.EmailAlreadyExists.Code, ex.Code);
 
@@ -85,7 +83,7 @@ namespace FCG.UnitTests.Application.UseCases.Auth.RegisterUser
         }
 
         [Fact]
-        public async Task Deve_criar_usuario_e_retornar_id_do_repositorio()
+        public async Task Deve_criar_usuario_e_retornar_o_id()
         {
             var sut = CreateSut();
 

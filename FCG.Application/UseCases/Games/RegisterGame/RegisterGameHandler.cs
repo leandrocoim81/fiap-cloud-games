@@ -1,8 +1,6 @@
 ﻿using FCG.Application.Abstractions.Persistence;
-using FCG.Domain.Entities;
 using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
-using FCG.Domain.Policies.Game;
 
 namespace FCG.Application.UseCases.Games.RegisterGame
 {
@@ -16,27 +14,16 @@ namespace FCG.Application.UseCases.Games.RegisterGame
         }
 
         public async Task<Guid> Handle(RegisterGameCommand cmd)
-        {
-            var normalizedTitle = cmd.Title?.Trim();
-            var normalizedDescription = cmd.Description?.Trim();
-
-            var validation = GamePolicy.Validate(
-                normalizedTitle,
-                normalizedDescription,
-                cmd.Price
-            );
-
-            if (!validation.IsValid)
-                throw new DomainException(validation.Error!);
-
-            if (await _games.ExistsByTitle(normalizedTitle!))
-                throw new DomainException(DomainErrors.Game.TitleAlreadyExists);
+        {    
 
             var game = new Game(
-                normalizedTitle!,
-                normalizedDescription!,
+                cmd.Title,
+                cmd.Description,
                 cmd.Price
             );
+
+            if (await _games.ExistsByTitle(game.Title))
+                throw new DomainException(DomainErrors.Game.TitleAlreadyExists);
 
             var createdGameId = await _games.Add(game);
 

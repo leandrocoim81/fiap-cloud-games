@@ -1,7 +1,7 @@
-﻿using FCG.Domain.Errors;
-using FCG.Domain.Validation;
+﻿using FCG.Application.Common.Errors;
+using FCG.Application.Common.Validation;
 
-namespace FCG.Domain.Policies.User
+namespace FCG.Application.Policies.Auth
 {
     public static class PasswordPolicy
     {
@@ -10,12 +10,12 @@ namespace FCG.Domain.Policies.User
         public static ValidationResult Validate(string? password)
         {
             if (string.IsNullOrWhiteSpace(password))
-                return ValidationResult.Fail(DomainErrors.User.PasswordIsNullOrWhiteSpace);
+                return ValidationResult.Fail(ApplicationErrors.Password.PasswordIsNullOrWhiteSpace);
 
             var p = password.Trim();
 
             if (p.Length < MinLength)
-                return ValidationResult.Fail(DomainErrors.User.PasswordTooShort);
+                return ValidationResult.Fail(ApplicationErrors.Password.PasswordTooShort);
 
             bool hasLetter = false;
             bool hasDigit = false;
@@ -29,11 +29,11 @@ namespace FCG.Domain.Policies.User
             }
 
             if (!hasLetter)
-                return ValidationResult.Fail(DomainErrors.User.PasswordMissingLetter);
+                return ValidationResult.Fail(ApplicationErrors.Password.PasswordMissingLetter);
             if (!hasDigit)
-                return ValidationResult.Fail(DomainErrors.User.PasswordMissingDigit);
+                return ValidationResult.Fail(ApplicationErrors.Password.PasswordMissingDigit);
             if (!hasSpecial)
-                return ValidationResult.Fail(DomainErrors.User.PasswordMissingSpecialCharacter);
+                return ValidationResult.Fail(ApplicationErrors.Password.PasswordMissingSpecialCharacter);
 
             return ValidationResult.Ok();
         }

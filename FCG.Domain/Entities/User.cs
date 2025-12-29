@@ -1,6 +1,7 @@
 ﻿using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
 using FCG.Domain.ValueObjects;
+using System.Text.RegularExpressions;
 
 namespace FCG.Domain.Entities
 {
@@ -19,19 +20,22 @@ namespace FCG.Domain.Entities
 
         public User(string name, Email email, string passwordHash)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            var normalizedName = Regex.Replace(name.Trim(), @"\s+", " ");
+            var normalizedHash = (passwordHash ?? "").Trim();
+
+            if (string.IsNullOrWhiteSpace(normalizedName))
                 throw new DomainException(DomainErrors.User.NameIsNullOrWhiteSpace);
 
-            if (string.IsNullOrWhiteSpace(email))
+            if (email is null)
                 throw new DomainException(DomainErrors.User.EmailIsNullOrWhiteSpace);
 
-            if (string.IsNullOrWhiteSpace(passwordHash))
+            if (string.IsNullOrWhiteSpace(normalizedHash))
                 throw new DomainException(DomainErrors.User.PasswordHashIsNullOrWhiteSpace);
 
             Id = Guid.NewGuid();
-            Name = name;
+            Name = normalizedName;
             Email = email;
-            PasswordHash = passwordHash;
+            PasswordHash = normalizedHash;
             Role = UserRole.User;
         }
 

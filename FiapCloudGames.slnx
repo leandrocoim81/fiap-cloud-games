@@ -3,5 +3,6 @@
   <Project Path="FCG.Application/FCG.Application.csproj" />
   <Project Path="FCG.Domain/FCG.Domain.csproj" />
   <Project Path="FCG.Infrastructure/FCG.Infrastructure.csproj" />
+  <Project Path="FCG.SharedKernel/FCG.SharedKernel.csproj" Id="012f2f1d-9046-4120-a8db-089b71ffd629" />
   <Project Path="FCG.UnitTests/FCG.UnitTests.csproj" />
 </Solution>

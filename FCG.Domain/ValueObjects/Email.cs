@@ -1,6 +1,6 @@
 ﻿using FCG.Domain.Errors;
 using FCG.Domain.Exceptions;
-using FCG.Domain.Policies.User;
+using System.Net.Mail;
 
 namespace FCG.Domain.ValueObjects;
 
@@ -10,14 +10,19 @@ public sealed record Email
 
     public Email(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
+        var normalized = value?.Trim().ToLowerInvariant();
+
+        if (string.IsNullOrWhiteSpace(normalized))
             throw new DomainException(DomainErrors.User.EmailIsNullOrWhiteSpace);
 
-        var normalized = value.Trim().ToLowerInvariant();
-
-        var validation = EmailPolicy.Validate(normalized);
-        if (!validation.IsValid)
-            throw new DomainException(validation.Error!);
+        try
+        {
+            _ = new MailAddress(normalized);
+        }
+        catch
+        {
+            throw new DomainException(DomainErrors.User.InvalidEmail);
+        }
 
         Value = normalized;
     }

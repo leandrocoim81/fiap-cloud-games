@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FCG.Domain\FCG.Domain.csproj" />
+    <ProjectReference Include="..\FCG.SharedKernel\FCG.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

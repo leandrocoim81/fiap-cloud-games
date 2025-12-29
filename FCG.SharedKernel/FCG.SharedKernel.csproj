@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FCG.SharedKernel\FCG.SharedKernel.csproj" />
-  </ItemGroup>
-
 </Project>

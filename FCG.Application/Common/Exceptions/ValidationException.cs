@@ -1,12 +1,11 @@
 ﻿using FCG.SharedKernel;
 
-namespace FCG.Domain.Exceptions
+namespace FCG.Application.Common.Exceptions
 {
-    public class DomainException : Exception
+    public class ValidationException : Exception
     {
         public string Code { get; }
-
-        public DomainException(ErrorCode error)
+        public ValidationException(ErrorCode error)
             : base(error.Message)
         {
             Code = error.Code;
